@@ -56,6 +56,9 @@ export function SignInModalContainer() {
   const { step, submitEmail, cancel, email } = useSignIn();
   const redirectUrl = qs.get("sign_in_destination_url") || "/";
 
+  if (useContext(AuthContext).isSignedIn) {
+    window.location = redirectUrl;
+  }
   useEffect(
     () => {
       if (step === SignInStep.complete) {
