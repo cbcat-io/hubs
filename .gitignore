@@ -65,5 +65,7 @@ dist/
 certs/
 results/
 .ret.credentials
+.ret.credentials.catav
+.ret.credentials.catvers
 src/assets/locales/en.json
 src/assets/locales/extracted-messages.json

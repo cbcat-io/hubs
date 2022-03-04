@@ -59,7 +59,9 @@ function findLocale(locale) {
 }
 
 export function setLocale(locale) {
-  const resolvedLocale = findLocale(locale);
+  let lcl = locale;
+  lcl = "ca";
+  const resolvedLocale = findLocale(lcl);
 
   if (resolvedLocale === DEFAULT_LOCALE) {
     _locale = resolvedLocale;

@@ -222,6 +222,7 @@ export async function createAndRedirectToNewHub(name, sceneId, replace) {
 
     // Create hub anonymously
     delete headers.authorization;
+
     res = await fetch(createUrl, {
       body: JSON.stringify(payload),
       headers,
