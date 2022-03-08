@@ -449,7 +449,7 @@
   "revoke-token-modal.revoke-warning-3": "i",
   "revoke-token-modal.revoke-warning-4": "no es pot desfer.",
   "revoke-token-modal.title": "Revocar token",
-  "room-entry-modal.enter-on-device-button": "Entrar des d'un dispositiu",
+  "room-entry-modal.enter-on-device-button": "Entrar en VR",
   "room-entry-modal.join-room-button": "Entrar a la sala",
   "room-entry-modal.options-button": "Opcions",
   "room-entry-modal.room-name-label": "Nom de la sala",
