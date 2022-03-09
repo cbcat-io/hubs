@@ -20,19 +20,19 @@ AFRAME.registerComponent("open-media-button", {
       this.el.object3D.visible = !!visible;
 
       if (visible) {
-        let label = "open link";
+        let label = "accedir";
         if (!this.data.onlyOpenLink) {
           let hubId;
           if (await isLocalHubsAvatarUrl(src)) {
-            label = "use avatar";
+            label = "usar avatar";
           } else if ((await isLocalHubsSceneUrl(src)) && mayChangeScene) {
-            label = "use scene";
+            label = "usar escena";
           } else if ((hubId = await isHubsRoomUrl(src))) {
             const url = new URL(src);
             if (url.hash && window.APP.hub.hub_id === hubId) {
-              label = "go to";
+              label = "anar a";
             } else {
-              label = "visit room";
+              label = "visitar sala";
             }
           }
         }
