@@ -24,9 +24,9 @@ AFRAME.registerComponent("open-media-button", {
         if (!this.data.onlyOpenLink) {
           let hubId;
           if (await isLocalHubsAvatarUrl(src)) {
-            label = "usar avatar";
+            label = "fer servir avatar";
           } else if ((await isLocalHubsSceneUrl(src)) && mayChangeScene) {
-            label = "usar escena";
+            label = "fer servir escena";
           } else if ((hubId = await isHubsRoomUrl(src))) {
             const url = new URL(src);
             if (url.hash && window.APP.hub.hub_id === hubId) {
