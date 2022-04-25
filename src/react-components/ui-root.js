@@ -1108,8 +1108,8 @@ class UIRoot extends Component {
       {
         id: "user",
         label:
-          "You" +
-          (this.state.signedIn ? ` (Signed in as: ${maskEmail(this.props.store.state.credentials.email)})` : ""),
+          "Tu" +
+          (this.state.signedIn ? ` (Sessió iniciada com a: ${maskEmail(this.props.store.state.credentials.email)})` : ""),
         items: [
           this.state.signedIn
             ? {
@@ -1159,7 +1159,7 @@ class UIRoot extends Component {
           },
           {
             id: "preferences",
-            label: "Preferences",
+            label: "preferències",
             icon: SettingsIcon,
             onClick: () => this.setState({ showPrefs: true })
           }
