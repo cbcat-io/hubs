@@ -450,6 +450,7 @@ class UIRoot extends Component {
 
   onLoadingFinished = () => {
     console.log("UI root loading has finished");
+    APP.store.state.preferences.fastRoomSwitching = true;
     this.setState({ noMoreLoadingUpdates: true });
     this.props.scene.emit("loading_finished");
 
