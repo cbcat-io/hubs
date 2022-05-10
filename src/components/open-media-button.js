@@ -2,6 +2,7 @@ import { isLocalHubsUrl, isLocalHubsSceneUrl, isHubsRoomUrl, isLocalHubsAvatarUr
 import { guessContentType } from "../utils/media-url-utils";
 import { handleExitTo2DInterstitial } from "../utils/vr-interstitial";
 import { changeHub } from "../change-hub";
+import { getReticulumFetchUrl } from "../utils/phoenix-utils";
 
 AFRAME.registerComponent("open-media-button", {
   schema: {
@@ -62,7 +63,61 @@ AFRAME.registerComponent("open-media-button", {
           window.history.replaceState(null, null, window.location.href.split("#")[0] + url.hash);
         } else if (APP.store.state.preferences.fastRoomSwitching && isLocalHubsUrl(this.src)) {
           // move to new room without page load or entry flow
-          changeHub(hubId);
+          const publicRooms = getReticulumFetchUrl("/api/v1/media/search?source=rooms&filter=public");
+          
+          let canChange = -1;
+
+          let res = await fetch(publicRooms, {
+            method: "GET"
+          }).then(r => r.json()).then((sales) =>
+          {
+
+            //console.log("sales: " + sales.entries);
+
+            sales.entries.every(element => {
+
+              //console.log("id de sala: " + element.id);
+              //console.log("hub ID: "+ hubId);
+
+              if(element.id == hubId)
+              {
+                const MAX_ROOMSIZE = 30;
+
+                let roomSize = element.room_size;
+
+                if(roomSize > MAX_ROOMSIZE)
+                {
+                  roomSize = MAX_ROOMSIZE;
+                }
+
+                var Pcount = element.member_count; // + element.lobby_count; /// només si volem saber el total
+
+                //console.log("A la sala amb id: " + element.id + " i escena de id: " + element.scene_id + " hi han " + Pcount + " persones");
+
+                if(Pcount < roomSize)
+                {
+                  //console.log("Es pot entrar");
+                  changeHub(hubId);
+                  canChange = 1; // la sala és publica i es pot entrar
+                }
+                else
+                {
+                  //console.log("No es pot entrar");
+                  canChange = 0; // la sala és pública però no es pot entrar
+                }
+                return false;
+              }
+              return true;
+
+            });
+
+            if(canChange == -1) // La sala no és pública
+            {
+              changeHub(hubId);
+            }
+
+          });
+          
         } else {
           await exitImmersive();
           location.href = this.src;
