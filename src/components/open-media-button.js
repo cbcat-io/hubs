@@ -1,3 +1,4 @@
+/* global APP*/
 import { isLocalHubsUrl, isLocalHubsSceneUrl, isHubsRoomUrl, isLocalHubsAvatarUrl } from "../utils/media-url-utils";
 import { guessContentType } from "../utils/media-url-utils";
 import { handleExitTo2DInterstitial } from "../utils/vr-interstitial";
@@ -81,13 +82,13 @@ AFRAME.registerComponent("open-media-button", {
 
               if(element.id == hubId)
               {
-                const MAX_ROOMSIZE = 30;
+                const DEFAULT_MAX_ROOMSIZE = 30; // màxim per garantir un bon funcionament d'audio (recomentar per hubs i usuaris discord hubs)
 
                 let roomSize = element.room_size;
 
-                if(roomSize > MAX_ROOMSIZE)
+                if(roomSize > DEFAULT_MAX_ROOMSIZE)
                 {
-                  roomSize = MAX_ROOMSIZE;
+                  roomSize = DEFAULT_MAX_ROOMSIZE;
                 }
 
                 var Pcount = element.member_count; // + element.lobby_count; /// només si volem saber el total
@@ -104,6 +105,7 @@ AFRAME.registerComponent("open-media-button", {
                 {
                   //console.log("No es pot entrar");
                   canChange = 0; // la sala és pública però no es pot entrar
+                  APP.messageDispatch.log("joinFailed", { message: "Sala plena" });
                 }
                 return false;
               }
