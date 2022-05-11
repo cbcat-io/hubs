@@ -76,7 +76,7 @@ AFRAME.registerComponent("icon-button", {
 
     if (this.data.tooltip && hovering) {
       const tooltipText =
-        (this.data.active ? this.data.activeTooltipText : this.data.tooltipText) + (disabled ? " Disabled" : "");
+        (this.data.active ? this.data.activeTooltipText : this.data.tooltipText) + (disabled ? " Desactivat" : "");
       this.data.tooltip.querySelector("[text]").setAttribute("text", "value", tooltipText);
     }
   }

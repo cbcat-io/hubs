@@ -58,6 +58,6 @@ AFRAME.registerComponent("avatar-volume-controls", {
         ? Math.floor(gainMultiplier / SMALL_STEP)
         : Math.floor(VOLUME_LABELS.length / 2 + (gainMultiplier - 1) / BIG_STEP)
     );
-    this.volumeLabel.setAttribute("text", "value", gainMultiplier === 0 ? "Muted" : VOLUME_LABELS[numBars]);
+    this.volumeLabel.setAttribute("text", "value", gainMultiplier === 0 ? "Silenciat" : VOLUME_LABELS[numBars]);
   }
 });
