@@ -105,7 +105,9 @@ AFRAME.registerComponent("open-media-button", {
                 {
                   //console.log("No es pot entrar");
                   canChange = 0; // la sala és pública però no es pot entrar
+                  this.label.setAttribute("text", "value", "Sala plena");
                   APP.messageDispatch.log("joinFailed", { message: "Sala plena" });
+                  setTimeout(() => {this.label.setAttribute("text", "value", "visitar sala")},2000);
                 }
                 return false;
               }
