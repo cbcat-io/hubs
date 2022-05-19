@@ -1,8 +1,9 @@
 import jwtDecode from "jwt-decode";
 import { EventTarget } from "event-target-shim";
 import { Presence } from "phoenix";
-import { migrateChannelToSocket, discordBridgesForPresences, migrateToChannel } from "./phoenix-utils";
+import { migrateChannelToSocket, discordBridgesForPresences, migrateToChannel, getReticulumFetchUrl } from "./phoenix-utils";
 import configs from "./configs";
+import { element } from "prop-types";
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 const MS_PER_MONTH = 1000 * 60 * 60 * 24 * 30;
@@ -64,9 +65,58 @@ export default class HubChannel extends EventTarget {
     return this.can(permission);
   }
 
-  canEnterRoom(hub) {
+  async limitFestaMajor(hub)
+  {    
+    ///-- Es podria afegir un array amb els ID's de les sales de catvers si es vol comprovar només aquestes i no totes les públiques
+      
+    const publicRooms = getReticulumFetchUrl("/api/v1/media/search?source=rooms&filter=public");
+
+    const DEFAULT_MAX_CATSIZE = 100;
+    const DEFAULT_OFFSET_LIMIT = 10;
+
+    let isPublic = false;
+    let Pcount = 0;
+
+    let response;
+
+    try{
+      response = await fetch(publicRooms).then(r => r.json());
+    }catch(e){
+      console.log(e);
+      return false;
+    }
+    
+
+    response.entries.forEach(element => {
+      Pcount += element.member_count + element.lobby_count;
+
+        if(element.id == hub.hub_id)
+        {
+          Pcount--;
+          isPublic = true;
+        } 
+    });
+
+    let resp = isPublic ?  Pcount < DEFAULT_MAX_CATSIZE - DEFAULT_OFFSET_LIMIT : true;
+    return resp;
+  }
+
+  async canEnterRoom(hub) {
     if (!hub) return false;
     if (this.canOrWillIfCreator("update_hub")) return true;
+
+    let resp;
+    const limitFestaMajorFunc = this.limitFestaMajor;
+    try{
+      resp = await limitFestaMajorFunc(hub);
+      console.log("hola2");
+    }catch(err)
+    {
+      console.log(err);
+      return false;
+    }
+
+    if(!resp) return false;
 
     const roomEntrySlotCount = Object.values(this.presence.state).reduce((acc, { metas }) => {
       const meta = metas[metas.length - 1];
@@ -75,8 +125,9 @@ export default class HubChannel extends EventTarget {
     }, 0);
 
     // This now exists in room settings but a default is left here to support old reticulum servers
-    const DEFAULT_ROOM_SIZE = 24;
+    const DEFAULT_ROOM_SIZE = 25;
     return roomEntrySlotCount < (hub.room_size !== undefined ? hub.room_size : DEFAULT_ROOM_SIZE);
+    
   }
 
   // Migrates this hub channel to a new phoenix channel and presence

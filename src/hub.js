@@ -501,7 +501,7 @@ export async function updateEnvironmentForHub(hub, entryManager) {
 }
 
 export async function updateUIForHub(hub, hubChannel) {
-  remountUI({ hub, entryDisallowed: !hubChannel.canEnterRoom(hub) });
+  remountUI({ hub, entryDisallowed: !(await hubChannel.canEnterRoom(hub)) });
 }
 
 function onConnectionError(entryManager, connectError) {
@@ -1253,11 +1253,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   events.on(`hub:sync`, ({ presence }) => {
     updateSceneCopresentState(presence, scene);
   });
-  events.on(`hub:sync`, ({ presence }) => {
+  events.on(`hub:sync`, async ({ presence }) => {
     remountUI({
       sessionId: socket.params().session_id,
       presences: presence.state,
-      entryDisallowed: !hubChannel.canEnterRoom(uiProps.hub)
+      entryDisallowed: !(await hubChannel.canEnterRoom(uiProps.hub))
     });
   });
 

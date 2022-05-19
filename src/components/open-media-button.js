@@ -68,7 +68,7 @@ AFRAME.registerComponent("open-media-button", {
           
           let canChange = -1;
 
-          let res = await fetch(publicRooms, {
+          await fetch(publicRooms, {
             method: "GET"
           }).then(r => r.json()).then((sales) =>
           {
@@ -91,7 +91,7 @@ AFRAME.registerComponent("open-media-button", {
                   roomSize = DEFAULT_MAX_ROOMSIZE;
                 }
 
-                var Pcount = element.member_count; // + element.lobby_count; /// només si volem saber el total
+                var Pcount = element.member_count + element.lobby_count; // agafem el total de persones, tant de lobby com a la sala
 
                 //console.log("A la sala amb id: " + element.id + " i escena de id: " + element.scene_id + " hi han " + Pcount + " persones");
 
