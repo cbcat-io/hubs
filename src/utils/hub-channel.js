@@ -109,7 +109,6 @@ export default class HubChannel extends EventTarget {
     const limitFestaMajorFunc = this.limitFestaMajor;
     try{
       resp = await limitFestaMajorFunc(hub);
-      console.log("hola2");
     }catch(err)
     {
       console.log(err);
