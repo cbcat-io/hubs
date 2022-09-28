@@ -187,6 +187,8 @@
   "home-page.public--rooms": "Sales públiques",
   "home-page.rooms-blurb": "Comparteix espais virtuals amb els teus amics, col·legues i comunitats. Quan crees una sala al CatVers, tindràs un espai privat per a fer reunions virtuals, on podreu compartir <b>- no són necessaris cascs de RV, ni tampoc cal descarregar cap programa.</b>",
   "home-page.rooms-title": "Crea una sala al moment",
+  "home-page.districtes": "Distrcites",
+  "home-page.salesEntitats": "Sales de les entitats",
   "hubs-cloud-page.features.diy-events-description": "Amb Hubs Cloud pots habilitar la teva pròpia estructura per als teus esdeveniments virtuals, personalitzant la teva instal·lació segons les teves necessitats.",
   "hubs-cloud-page.features.diy-events-title": "Esdeveniments per fer tu mateix/a",
   "hubs-cloud-page.features.self-hosted-description": "Amb Hubs Cloud, la teva instal·lació es troba en la infraestructura de la teva pròpia organització, mantenint les teves dades confidencials privades i segures dins el compte AWS dels seus equips.",

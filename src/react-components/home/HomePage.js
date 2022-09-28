@@ -30,7 +30,11 @@ export function HomePage() {
   const { results: publicRooms } = usePublicRooms();
 
   const sortedFavoriteRooms = Array.from(favoriteRooms).sort((a, b) => b.member_count - a.member_count);
-  const sortedPublicRooms = Array.from(publicRooms).sort((a, b) => b.member_count - a.member_count);
+  const sortedPublicRooms = Array.from(publicRooms).sort((a, b) => a.member_count - b.member_count);
+  const DISTRICTES_FESTAMAJOR = [
+    "85NSKrq",
+    "AAAAAA"
+  ];
   const wrapInBold = chunk => <b>{chunk}</b>;
   const isHmc = configs.feature("show_cloud");
   useEffect(() => {
@@ -141,7 +145,7 @@ export function HomePage() {
           </Column>
         </Container>
       )}
-      {sortedPublicRooms.length > 0 && (
+      {/*sortedPublicRooms.length > 0 && (
         <Container className={styles.roomsContainer}>
           <h3 className={styles.roomsHeading}>
             <FormattedMessage id="home-page.public--rooms" defaultMessage="Public Rooms" />
@@ -149,15 +153,68 @@ export function HomePage() {
           <Column grow padding className={styles.rooms}>
             <MediaGrid center>
               {sortedPublicRooms.map(room => {
-                return (
-                  <MediaTile
-                    key={room.id}
-                    entry={room}
-                    processThumbnailUrl={(entry, width, height) =>
-                      scaledThumbnailUrlFor(entry.images.preview.url, width, height)
-                    }
-                  />
-                );
+                  return (
+                    <MediaTile
+  
+                      key={room.id}
+                      entry={room}
+                      processThumbnailUrl={(entry, width, height) =>
+                        scaledThumbnailUrlFor(entry.images.preview.url, width, height)
+                      }
+                    />
+                  );
+              })}
+            </MediaGrid>
+          </Column>
+        </Container>
+            )*/}
+      {sortedPublicRooms.length > 0 && (
+        <Container className={styles.roomsContainer}>
+          <h3 className={styles.roomsHeading}>
+            <FormattedMessage id="home-page.districtes" defaultMessage="Districtes" />
+          </h3>
+          <Column grow padding className={styles.rooms}>
+            <MediaGrid center>
+              {sortedPublicRooms.map(room => {
+                if(DISTRICTES_FESTAMAJOR.includes(room.id))
+                {
+                  return (
+                    <MediaTile
+  
+                      key={room.id}
+                      entry={room}
+                      processThumbnailUrl={(entry, width, height) =>
+                        scaledThumbnailUrlFor(entry.images.preview.url, width, height)
+                      }
+                    />
+                  );
+                }
+              })}
+            </MediaGrid>
+          </Column>
+        </Container>
+      )}
+      {sortedPublicRooms.length > 0 && (
+        <Container className={styles.roomsContainer}>
+          <h3 className={styles.roomsHeading}>
+            <FormattedMessage id="home-page.salesEntitats" defaultMessage="Entitats" />
+          </h3>
+          <Column grow padding className={styles.rooms}>
+            <MediaGrid center>
+              {sortedPublicRooms.map(room => {
+                if(!DISTRICTES_FESTAMAJOR.includes(room.id))
+                {
+                  return (
+                    <MediaTile
+  
+                      key={room.id}
+                      entry={room}
+                      processThumbnailUrl={(entry, width, height) =>
+                        scaledThumbnailUrlFor(entry.images.preview.url, width, height)
+                      }
+                    />
+                  );
+                }
               })}
             </MediaGrid>
           </Column>
