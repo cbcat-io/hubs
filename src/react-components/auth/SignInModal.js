@@ -77,15 +77,43 @@ export const SignInMessages = defineMessages({
   }
 });
 
-export function SubmitEmail({ onSubmitEmail, initialEmail, privacyUrl, termsUrl, message }) {
+export function SubmitEmail({ onSubmitEmail, initialEmail, initialName, initialAge, privacyUrl, termsUrl, message }) {
   const intl = useIntl();
 
   const [email, setEmail] = useState(initialEmail);
+  const [name, setName] = useState(initialName);
+  const [age, setAge] = useState(initialAge);
+  const [loadMessage, setloadMsg] = useState("");
+  const [disBtn, setDisBtn] = useState(false);
 
   const onSubmitForm = useCallback(
-    e => {
+    async e =>  {
+      setDisBtn(true);
+      setloadMsg("Carregant, un moment siusplau...");
       e.preventDefault();
-      onSubmitEmail(email);
+      var url = 'https://script.google.com/macros/s/AKfycbyzwa5hbLdePsTLB4IrMqFc_XNeeJWgW4HHjKMwcEanw7Xad0M/exec';
+      const data = {Nom: name, Edat: age, Correu: email};
+
+      await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        body: JSON.stringify(data)
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        //console.log('Success:', data);
+        //console.log(name);
+        //console.log(age);
+        //console.log(email);
+        e.preventDefault();
+        onSubmitEmail(email);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+     
     },
     [onSubmitEmail, email]
   );
@@ -95,6 +123,20 @@ export function SubmitEmail({ onSubmitEmail, initialEmail, privacyUrl, termsUrl,
       setEmail(e.target.value);
     },
     [setEmail]
+  );
+
+  const onChangeName = useCallback(
+    e => {
+      setName(e.target.value);
+    },
+    [setName]
+  );
+
+  const onChangeAge = useCallback(
+    e => {
+      setAge(e.target.value);
+    },
+    [setAge]
   );
 
   return (
@@ -107,25 +149,49 @@ export function SubmitEmail({ onSubmitEmail, initialEmail, privacyUrl, termsUrl,
         )}
       </p>
       <TextInputField
-        name="email"
+        name="Nom"
+        type="text"
+        required
+        value={name}
+        onChange={onChangeName}
+        placeholder="Nom i Cognom"
+      />
+      <select
+      name="Edat"
+      value={age}
+      onChange={onChangeAge}
+      required
+      >
+        <option value="">Sel·lecciona edat...</option>
+        <option value="menor de 18">Menor de 18</option>
+        <option value="entre 18 i 25">Entre 18 i 25</option>
+        <option value="entre 26 i 35">Entre 26 i 35</option>
+        <option value="entre 36 i 45">Entre 36 i 45</option>
+        <option value="major de 45">Major de 45</option>
+      </select>
+      <TextInputField
+        name="Correu"
         type="email"
         required
         value={email}
         onChange={onChangeEmail}
-        placeholder="example@example.com"
+        placeholder="Correu Electrònic"
       />
       <p>
         <small>
           <LegalMessage termsUrl={termsUrl} privacyUrl={privacyUrl} />
         </small>
       </p>
-      <NextButton type="submit" />
+      <p>{loadMessage}</p>
+      <NextButton type="submit" disabled={disBtn}/>
     </Column>
   );
 }
 
 SubmitEmail.defaultProps = {
-  initialEmail: ""
+  initialEmail: "",
+  initialName: "",
+  initialAge: ""
 };
 
 SubmitEmail.propTypes = {
@@ -133,6 +199,8 @@ SubmitEmail.propTypes = {
   termsUrl: PropTypes.string,
   privacyUrl: PropTypes.string,
   initialEmail: PropTypes.string,
+  initialName: PropTypes.string,
+  initialAge: PropTypes.string,
   onSubmitEmail: PropTypes.func.isRequired
 };
 
@@ -167,6 +235,8 @@ export function WaitForVerification({ email, onCancel, showNewsletterSignup }) {
 WaitForVerification.propTypes = {
   showNewsletterSignup: PropTypes.bool,
   email: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  age: PropTypes.string.isRequired,
   onCancel: PropTypes.func.isRequired
 };
 
