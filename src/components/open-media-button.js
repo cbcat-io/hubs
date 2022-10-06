@@ -72,17 +72,11 @@ AFRAME.registerComponent("open-media-button", {
             method: "GET"
           }).then(r => r.json()).then((sales) =>
           {
-
-            //console.log("sales: " + sales.entries);
-
             sales.entries.every(element => {
-
-              //console.log("id de sala: " + element.id);
-              //console.log("hub ID: "+ hubId);
 
               if(element.id == hubId)
               {
-                const DEFAULT_MAX_ROOMSIZE = 30; // màxim per garantir un bon funcionament d'audio (recomentar per hubs i usuaris discord hubs)
+                const DEFAULT_MAX_ROOMSIZE = 25; // màxim per garantir un bon funcionament d'audio (recomentar per hubs i usuaris discord hubs)
 
                 let roomSize = element.room_size;
 
@@ -91,19 +85,16 @@ AFRAME.registerComponent("open-media-button", {
                   roomSize = DEFAULT_MAX_ROOMSIZE;
                 }
 
-                var Pcount = element.member_count + element.lobby_count; // agafem el total de persones, tant de lobby com a la sala
-
-                //console.log("A la sala amb id: " + element.id + " i escena de id: " + element.scene_id + " hi han " + Pcount + " persones");
+                var Pcount = element.member_count; // agafem el total de persones dins la sala
 
                 if(Pcount < roomSize)
                 {
-                  //console.log("Es pot entrar");
-                  changeHub(hubId);
                   canChange = 1; // la sala és publica i es pot entrar
+                  changeHub(hubId);
+                  
                 }
                 else
                 {
-                  //console.log("No es pot entrar");
                   canChange = 0; // la sala és pública però no es pot entrar
                   this.label.setAttribute("text", "value", "Sala plena");
                   APP.messageDispatch.log("joinFailed", { message: "Sala plena" });
@@ -112,10 +103,9 @@ AFRAME.registerComponent("open-media-button", {
                 return false;
               }
               return true;
-
             });
 
-            if(canChange == -1) // La sala no és pública
+            if(canChange == -1) // La sala no és pública, per tant, entrem
             {
               changeHub(hubId);
             }
