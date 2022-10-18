@@ -77,12 +77,11 @@ export const SignInMessages = defineMessages({
   }
 });
 
-export function SubmitEmail({ onSubmitEmail, initialEmail, initialName, initialAge, privacyUrl, termsUrl, message }) {
+export function SubmitEmail({ onSubmitEmail, initialEmail, initialName, privacyUrl, termsUrl, message }) {
   const intl = useIntl();
 
   const [email, setEmail] = useState(initialEmail);
   const [name, setName] = useState(initialName);
-  const [age, setAge] = useState(initialAge);
   const [loadMessage, setloadMsg] = useState("");
   const [disBtn, setDisBtn] = useState(false);
 
@@ -92,7 +91,7 @@ export function SubmitEmail({ onSubmitEmail, initialEmail, initialName, initialA
       setloadMsg("Carregant, un moment siusplau...");
       e.preventDefault();
       var url = 'https://script.google.com/macros/s/AKfycbyzwa5hbLdePsTLB4IrMqFc_XNeeJWgW4HHjKMwcEanw7Xad0M/exec';
-      const data = {Nom: name, Edat: age, Correu: email};
+      const data = {Nom: name, Correu: email};
 
       await fetch(url, {
         method: 'POST',
@@ -103,10 +102,7 @@ export function SubmitEmail({ onSubmitEmail, initialEmail, initialName, initialA
       })
       .then((response) => response.json())
       .then((data) => {
-        //console.log('Success:', data);
-        //console.log(name);
-        //console.log(age);
-        //console.log(email);
+        console.log(data);
         e.preventDefault();
         onSubmitEmail(email);
       })
@@ -132,13 +128,6 @@ export function SubmitEmail({ onSubmitEmail, initialEmail, initialName, initialA
     [setName]
   );
 
-  const onChangeAge = useCallback(
-    e => {
-      setAge(e.target.value);
-    },
-    [setAge]
-  );
-
   return (
     <Column center padding as="form" onSubmit={onSubmitForm}>
       <p>
@@ -156,19 +145,6 @@ export function SubmitEmail({ onSubmitEmail, initialEmail, initialName, initialA
         onChange={onChangeName}
         placeholder="Nom i Cognom"
       />
-      <select
-      name="Edat"
-      value={age}
-      onChange={onChangeAge}
-      required
-      >
-        <option value="">Sel·lecciona edat...</option>
-        <option value="menor de 18">Menor de 18</option>
-        <option value="entre 18 i 25">Entre 18 i 25</option>
-        <option value="entre 26 i 35">Entre 26 i 35</option>
-        <option value="entre 36 i 45">Entre 36 i 45</option>
-        <option value="major de 45">Major de 45</option>
-      </select>
       <TextInputField
         name="Correu"
         type="email"
@@ -190,8 +166,7 @@ export function SubmitEmail({ onSubmitEmail, initialEmail, initialName, initialA
 
 SubmitEmail.defaultProps = {
   initialEmail: "",
-  initialName: "",
-  initialAge: ""
+  initialName: ""
 };
 
 SubmitEmail.propTypes = {
@@ -200,7 +175,6 @@ SubmitEmail.propTypes = {
   privacyUrl: PropTypes.string,
   initialEmail: PropTypes.string,
   initialName: PropTypes.string,
-  initialAge: PropTypes.string,
   onSubmitEmail: PropTypes.func.isRequired
 };
 
@@ -236,7 +210,6 @@ WaitForVerification.propTypes = {
   showNewsletterSignup: PropTypes.bool,
   email: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  age: PropTypes.string.isRequired,
   onCancel: PropTypes.func.isRequired
 };
 

@@ -21,6 +21,7 @@ import { SocialBar } from "../home/SocialBar";
 import { SignInButton } from "./SignInButton";
 import maskEmail from "../../utils/mask-email";
 import { ReactComponent as HmcLogo } from "../icons/HmcLogo.svg";
+import { useCssBreakpoints } from "react-use-css-breakpoints";
 
 export function HomePage() {
   const auth = useContext(AuthContext);
@@ -32,7 +33,7 @@ export function HomePage() {
   const sortedFavoriteRooms = Array.from(favoriteRooms).sort((a, b) => b.member_count - a.member_count);
   const sortedPublicRooms = Array.from(publicRooms).sort((a, b) => a.member_count - b.member_count);
   const DISTRICTES_FESTAMAJOR = [
-    "85NSKrq",
+    "FH9jnYV",
     "AAAAAA"
   ];
   const wrapInBold = chunk => <b>{chunk}</b>;
@@ -57,6 +58,7 @@ export function HomePage() {
   }, []);
 
   const canCreateRooms = !configs.feature("disable_room_creation") || auth.isAdmin;
+  const breakpoint = useCssBreakpoints();
   const email = auth.email;
   return (
     <PageContainer className={styles.homePage}>
@@ -168,6 +170,22 @@ export function HomePage() {
           </Column>
         </Container>
             )*/}
+            <Container className={styles.roomsContainer}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            >
+            <Button
+            thick={breakpoint === "sm" || breakpoint === "md"}
+            xl={breakpoint !== "sm" && breakpoint !== "md"}
+            preset="landing"
+            onClick={()=>{ window.open('https://discord.gg/tYBSrvk5Db', '_blank')}}
+            >
+              <FormattedMessage id="discord-vote-button" defaultMessage="Vote on discord!"/>
+            </Button>
+            </Container>
       {sortedPublicRooms.length > 0 && (
         <Container className={styles.roomsContainer}>
           <h3 className={styles.roomsHeading}>
@@ -242,13 +260,6 @@ export function HomePage() {
           </Column>
         </Container>
       )}
-      <Container>
-        <Column center grow>
-          <Button thin preset="landing" as="a" href="/link">
-            <FormattedMessage id="home-page.have-code" defaultMessage="Have a room code?" />
-          </Button>
-        </Column>
-      </Container>
       {isHmc ? (
         <Column center>
           <SocialBar />
