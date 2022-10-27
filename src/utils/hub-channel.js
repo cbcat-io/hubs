@@ -71,8 +71,8 @@ export default class HubChannel extends EventTarget {
       
     const publicRooms = getReticulumFetchUrl("/api/v1/media/search?source=rooms&filter=public");
 
-    const DEFAULT_MAX_CATSIZE = 500;
-    const DEFAULT_OFFSET_LIMIT = 450;
+    const DEFAULT_MAX_CATSIZE = 300;
+    const DEFAULT_OFFSET_LIMIT = 50; // 300 - 50
 
     let isPublic = false;
     let Pcount = 0;
@@ -97,7 +97,7 @@ export default class HubChannel extends EventTarget {
         } 
     });
 
-    return isPublic ?  Pcount < DEFAULT_MAX_CATSIZE - DEFAULT_OFFSET_LIMIT : true;
+    return isPublic ?  Pcount < (DEFAULT_MAX_CATSIZE - DEFAULT_OFFSET_LIMIT) : true;
   }
 
   async canEnterRoom(hub) {

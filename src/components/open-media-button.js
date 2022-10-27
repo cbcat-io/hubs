@@ -76,7 +76,7 @@ AFRAME.registerComponent("open-media-button", {
 
               if(element.id == hubId)
               {
-                const DEFAULT_MAX_ROOMSIZE = 25; // màxim per garantir un bon funcionament d'audio (recomenat per hubs i usuaris discord hubs)
+                const DEFAULT_MAX_ROOMSIZE = 20; // màxim per garantir un bon funcionament d'audio (recomenat per hubs i usuaris discord hubs)
 
                 let roomSize = element.room_size;
 

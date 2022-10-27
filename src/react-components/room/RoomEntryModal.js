@@ -47,6 +47,14 @@ export function RoomEntryModal({
           </h5>
           <p>{roomName}</p>
         </div>
+        {!showJoinRoom && !showEnterOnDevice && (
+        <p>
+          <h2>
+          <FormattedMessage id="room-entry-modal.room-is-full" defaultMessage="The room is full!" />
+          </h2>
+          <FormattedMessage id="room-entry-modal.room-is-full2" defaultMessage="Try another one!" />
+        </p>
+        )}
         <Column center className={styles.buttons}>
           {showJoinRoom && (
             <Button preset="accent4" onClick={onJoinRoom}>

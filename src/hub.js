@@ -713,7 +713,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const hubId = getCurrentHubId();
   console.log(`Hub ID: ${hubId}`);
-
+  if (window.location.href === "https://catvers.land/shnKg78/discoteca-maddox")  /// provisional per el QR de Carmenati
+  {
+      window.location.href = "https://catvers.land/D4fr3Ci/maddox";
+  }
   const shouldRedirectToSignInPage =
     // Default room won't work if account is required to access
     !configs.feature("default_room_id") &&
