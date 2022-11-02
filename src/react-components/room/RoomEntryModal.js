@@ -47,7 +47,7 @@ export function RoomEntryModal({
           </h5>
           <p>{roomName}</p>
         </div>
-        {!showJoinRoom && !showEnterOnDevice && (
+        {!showJoinRoom && !showEnterOnDevice && showSpectate && (
         <p>
           <h2>
           <FormattedMessage id="room-entry-modal.room-is-full" defaultMessage="The room is full!" />

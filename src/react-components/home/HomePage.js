@@ -33,8 +33,10 @@ export function HomePage() {
   const sortedFavoriteRooms = Array.from(favoriteRooms).sort((a, b) => b.member_count - a.member_count);
   const sortedPublicRooms = Array.from(publicRooms).sort((a, b) => a.member_count - b.member_count);
   const DISTRICTES_FESTAMAJOR = [
-    "FH9jnYV",
-    "AAAAAA"
+    "7zdQAtB",
+    "x8CdKth",
+    "uqy6n7v",
+    "jyV9su7"
   ];
   const wrapInBold = chunk => <b>{chunk}</b>;
   const isHmc = configs.feature("show_cloud");

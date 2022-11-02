@@ -72,7 +72,7 @@ export default class HubChannel extends EventTarget {
     const publicRooms = getReticulumFetchUrl("/api/v1/media/search?source=rooms&filter=public");
 
     const DEFAULT_MAX_CATSIZE = 300;
-    const DEFAULT_OFFSET_LIMIT = 50; // 300 - 50
+    const DEFAULT_OFFSET_LIMIT = 50; // 300 - 50, 250 persones simultànies
 
     let isPublic = false;
     let Pcount = 0;
