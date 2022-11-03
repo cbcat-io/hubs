@@ -38,6 +38,21 @@ export function HomePage() {
     "uqy6n7v",
     "jyV9su7"
   ];
+  const salesDistrictes = [];
+  const salesEntitats = [];
+  publicRooms.forEach(element => {
+    if(DISTRICTES_FESTAMAJOR.includes(element.id))
+    {
+      salesDistrictes.push(element);
+    }
+    else
+    {
+      salesEntitats.push(element);
+    }
+  });
+  const sortedSalesDistrcites = Array.from(salesDistrictes).sort((a,b)=> a.name.localeCompare(b.name));
+  const sortedSalesEntitats = Array.from(salesEntitats).sort((a,b)=> a.name.localeCompare(b.name));
+
   const wrapInBold = chunk => <b>{chunk}</b>;
   const isHmc = configs.feature("show_cloud");
   useEffect(() => {
@@ -188,16 +203,14 @@ export function HomePage() {
               <FormattedMessage id="discord-vote-button" defaultMessage="Vote on discord!"/>
             </Button>
             </Container>
-      {sortedPublicRooms.length > 0 && (
+      {sortedSalesDistrcites.length > 0 && (
         <Container className={styles.roomsContainer}>
           <h3 className={styles.roomsHeading}>
             <FormattedMessage id="home-page.districtes" defaultMessage="Districtes" />
           </h3>
           <Column grow padding className={styles.rooms}>
             <MediaGrid center>
-              {sortedPublicRooms.map(room => {
-                if(DISTRICTES_FESTAMAJOR.includes(room.id))
-                {
+              {sortedSalesDistrcites.map(room => {
                   return (
                     <MediaTile
   
@@ -208,22 +221,19 @@ export function HomePage() {
                       }
                     />
                   );
-                }
               })}
             </MediaGrid>
           </Column>
         </Container>
       )}
-      {sortedPublicRooms.length > 0 && (
+      {sortedSalesEntitats.length > 0 && (
         <Container className={styles.roomsContainer}>
           <h3 className={styles.roomsHeading}>
             <FormattedMessage id="home-page.salesEntitats" defaultMessage="Entitats" />
           </h3>
           <Column grow padding className={styles.rooms}>
             <MediaGrid center>
-              {sortedPublicRooms.map(room => {
-                if(!DISTRICTES_FESTAMAJOR.includes(room.id))
-                {
+              {sortedSalesEntitats.map(room => {
                   return (
                     <MediaTile
   
@@ -234,7 +244,6 @@ export function HomePage() {
                       }
                     />
                   );
-                }
               })}
             </MediaGrid>
           </Column>
