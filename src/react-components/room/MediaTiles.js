@@ -197,11 +197,11 @@ export function MediaTile({ entry, processThumbnailUrl, onClick, onEdit, onShowS
         )}
       </a>
       {entry.favorited && <StarIcon className={styles.favoriteIcon} />}
-      {entry.member_count !== undefined && (
+      {/*entry.member_count !== undefined && (
         <div className={styles.memberCount}>
           <PeopleIcon /> <span>{entry.member_count}</span>
         </div>
-      )}
+      )*/}
       <div className={styles.tileActions}>
         {entry.type === "avatar" && (
           <TileAction
