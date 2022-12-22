@@ -46,6 +46,11 @@ export function RoomEntryModal({
             <FormattedMessage id="room-entry-modal.room-name-label" defaultMessage="Room Name" />
           </h5>
           <p>{roomName}</p>
+          <p>
+            <small>
+            <FormattedMessage id="room-entry-modal.warning-alert" defaultMessage="Safari browser and iPhone's not recomended" />
+            </small>
+          </p>
         </div>
         {!showJoinRoom && !showEnterOnDevice && showSpectate && (
         <p>

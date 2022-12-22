@@ -38,12 +38,22 @@ export function HomePage() {
     "uqy6n7v",
     "jyV9su7"
   ];
+  const NADAL = [
+    "GSqg4BT",
+    "o7Dn4SR",
+    "bYynjfV"
+  ];
+  const salesNadal = [];
   const salesDistrictes = [];
   const salesEntitats = [];
   publicRooms.forEach(element => {
     if(DISTRICTES_FESTAMAJOR.includes(element.id))
     {
       salesDistrictes.push(element);
+    }
+    else if(NADAL.includes(element.id))
+    {
+      salesNadal.push(element);
     }
     else
     {
@@ -52,6 +62,7 @@ export function HomePage() {
   });
   const sortedSalesDistrcites = Array.from(salesDistrictes).sort((a,b)=> a.name.localeCompare(b.name));
   const sortedSalesEntitats = Array.from(salesEntitats).sort((a,b)=> a.name.localeCompare(b.name));
+  const sortedSalesNadal = Array.from(salesNadal).sort((a,b)=> a.name.localeCompare(b.name));
 
   const wrapInBold = chunk => <b>{chunk}</b>;
   const isHmc = configs.feature("show_cloud");
@@ -108,6 +119,7 @@ export function HomePage() {
             <div className={styles.appDescription}>{configs.translation("app-description")}</div>
             {canCreateRooms && <CreateRoomButton />}
             <PWAButton />
+            
           </div>
           <div className={styles.heroImageContainer}>
             <img
@@ -120,7 +132,7 @@ export function HomePage() {
               )}
               src={configs.image("home_background")}
             />
-          </div>
+            </div>
         </div>
       </Container>
       {configs.feature("show_feature_panels") && (
@@ -187,7 +199,7 @@ export function HomePage() {
           </Column>
         </Container>
             )*/}
-            <Container className={styles.roomsContainer}
+            {/* <Container className={styles.roomsContainer}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -202,9 +214,33 @@ export function HomePage() {
             >
               <FormattedMessage id="discord-vote-button" defaultMessage="Vote on discord!"/>
             </Button>
-            </Container>
+            </Container> */}
+      {sortedSalesNadal.length > 0 && (
+        <Container className={styles.roomsContainer}>
+          <h3 className={styles.roomsHeading}>
+            <FormattedMessage id="home-page.salesNadal" defaultMessage="Nadal" />
+          </h3>
+          <Column grow padding className={styles.rooms}>
+            <MediaGrid center>
+              {sortedSalesNadal.map(room => {
+                  return (
+                    <MediaTile
+  
+                      key={room.id}
+                      entry={room}
+                      processThumbnailUrl={(entry, width, height) =>
+                        scaledThumbnailUrlFor(entry.images.preview.url, width, height)
+                      }
+                    />
+                  );
+              })}
+            </MediaGrid>
+          </Column>
+        </Container>
+      )}
       {sortedSalesDistrcites.length > 0 && (
         <Container className={styles.roomsContainer}>
+          <h1 className={styles.roomsHeading}>Festa Major</h1>
           <h3 className={styles.roomsHeading}>
             <FormattedMessage id="home-page.districtes" defaultMessage="Districtes" />
           </h3>
