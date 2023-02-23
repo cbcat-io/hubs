@@ -1039,12 +1039,12 @@ class PreferencesScreen extends Component {
       [
         CATEGORY_MISC,
         [
-          {
-            key: "locale",
-            prefType: PREFERENCE_LIST_ITEM_TYPE.SELECT,
-            options: availableLocales,
-            defaultString: "browser"
-          },
+          // {
+          //   key: "locale",
+          //   prefType: PREFERENCE_LIST_ITEM_TYPE.SELECT,
+          //   options: availableLocales,
+          //   defaultString: "browser"
+          // },
           {
             key: "theme",
             prefType: PREFERENCE_LIST_ITEM_TYPE.SELECT,
